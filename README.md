@@ -28,6 +28,19 @@ Given a short Python snippet, BugHound:
 
 ---
 
+## Activity summary
+
+This project was explored and extended with the following steps:
+
+* Verified the offline heuristic workflow and Gemini API integration.
+* Added a local `.env` file for Gemini key configuration.
+* Inspected `bughound_agent.py`, `prompts/`, and `reliability/risk_assessor.py` to understand analysis, fix proposal, and risk evaluation.
+* Introduced a new risk guardrail that penalizes overly large rewrites and prevents auto-fix for those cases.
+* Updated `model_card.md` with system behavior, failure modes, and improvement ideas.
+* Confirmed the change with `pytest`, bringing the full suite to `9 passed`.
+
+---
+
 ## Setup
 
 ### 1. Create a virtual environment (recommended)
