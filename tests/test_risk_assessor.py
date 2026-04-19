@@ -46,3 +46,21 @@ def test_missing_return_is_penalized():
     )
     assert risk["score"] < 100
     assert any("Return" in r or "return" in r for r in risk["reasons"])
+
+
+def test_large_rewrite_is_penalized_and_refuses_autofix():
+    original = "def greet(name):\n    print(\"Hello\", name)\n"
+    fixed = (
+        "import logging\n\n"
+        "def greet(name):\n"
+        "    logging.info(\"Hello %s\", name)\n"
+        "    logging.info(\"Greeting complete\")\n"
+        "    return True\n"
+    )
+    risk = assess_risk(
+        original_code=original,
+        fixed_code=fixed,
+        issues=[{"type": "Code Quality", "severity": "Low", "msg": "print statement"}],
+    )
+    assert any("much longer" in reason.lower() for reason in risk["reasons"])
+    assert risk["should_autofix"] is False
